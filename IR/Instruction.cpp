@@ -4,7 +4,7 @@
 #include <iostream>
 
 Instruction::Instruction(unsigned opCode, const Value &dest, const Value &src) {
-  assert(opCode == SimpleDef && "Expected a simple assignment");
+  assert(opCode == RegDef && "Expected a simple assignment");
   this->opCode = opCode;
   this->op1 = dest;
   this->op2 = src;
@@ -34,8 +34,8 @@ Instruction::Instruction(unsigned opCode, const Value &label) {
 void Instruction::dump() const {
   std::cout << '<';
   switch (opCode) {
-  case SimpleDef:
-    std::cout << "SimpleDef";
+  case RegDef:
+    std::cout << "RegDef";
     break;
 
   case Br:

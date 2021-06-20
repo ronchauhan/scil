@@ -160,7 +160,7 @@ bool Parser::parseDef(std::vector<Token> &tokens) {
 
   switch (tokens.size()) {
   case 3:
-    return parseSimpleDef(tokens);
+    return parseRegDef(tokens);
   case 5:
     return parseRelationalOpInst(tokens);
   case 6:
@@ -170,8 +170,8 @@ bool Parser::parseDef(std::vector<Token> &tokens) {
   }
 }
 
-bool Parser::parseSimpleDef(std::vector<Token> &tokens) {
-  assert(tokens.size() == 3 && "SimpleDef must have 3 tokens");
+bool Parser::parseRegDef(std::vector<Token> &tokens) {
+  assert(tokens.size() == 3 && "RegDef must have 3 tokens");
   assert(tokens[0].kind == Token::Ident && "Expected Token::Ident");
 
   if (tokens[1].kind != Token::Assign)
@@ -189,7 +189,7 @@ bool Parser::parseSimpleDef(std::vector<Token> &tokens) {
     else
       src = Value(Value::Register, tokens[2].string.c_str());
 
-    instList.emplace_back(Instruction(Instruction::SimpleDef, dest, src));
+    instList.emplace_back(Instruction(Instruction::RegDef, dest, src));
   }
   return true;
 }

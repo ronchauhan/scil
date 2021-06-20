@@ -14,7 +14,7 @@
 // .label
 class Instruction {
 public:
-  enum { SimpleDef = 1, Br, Jmp, LabelDef, Add, Sub, Mul, Div, Gt, Lt };
+  enum { RegDef = 1, Br, Jmp, LabelDef, Add, Sub, Mul, Div, Gt, Lt };
 
 private:
   unsigned opCode;
@@ -22,7 +22,7 @@ private:
   Value op1, op2, op3;
 
 public:
-  // SimpleDef
+  // RegDef
   Instruction(unsigned opCode, const Value &dest, const Value &src);
 
   // branch, relational or binary operations

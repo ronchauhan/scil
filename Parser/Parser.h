@@ -72,7 +72,7 @@ public:
   bool parseDef(std::vector<Token> &tokens);
 
   // dest = src
-  bool parseSimpleDef(std::vector<Token> &tokens);
+  bool parseRegDef(std::vector<Token> &tokens);
 
   // dest = binOp src1, src2
   bool parseBinaryOpInst(std::vector<Token> &tokens);
