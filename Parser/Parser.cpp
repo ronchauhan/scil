@@ -149,7 +149,7 @@ bool Parser::parseLabelDef(std::vector<Token> &tokens) {
     return false;
 
   if (!errGlobalState) {
-    Value labelName(Value::Label, tokens[1].string);
+    Value labelName(Value::Label, tokens[1].string.c_str());
     instList.emplace_back(Instruction(Instruction::LabelDef, labelName));
   }
   return true;
@@ -180,14 +180,14 @@ bool Parser::parseSimpleDef(std::vector<Token> &tokens) {
     return false;
 
   if (!errGlobalState) {
-    Value dest(Value::Register, tokens[0].string);
+    Value dest(Value::Register, tokens[0].string.c_str());
 
     unsigned srcKind = tokens[2].kind;
     Value src;
     if (srcKind == Token::IntLiteral)
       src = Value(Value::Immediate, std::stoll(tokens[2].string));
     else
-      src = Value(Value::Register, tokens[2].string);
+      src = Value(Value::Register, tokens[2].string.c_str());
 
     instList.emplace_back(Instruction(Instruction::SimpleDef, dest, src));
   }
@@ -236,21 +236,21 @@ bool Parser::parseBinaryOpInst(std::vector<Token> &tokens) {
     return false;
 
   if (!errGlobalState) {
-    Value dest(Value::Register, tokens[0].string);
+    Value dest(Value::Register, tokens[0].string.c_str());
 
     unsigned srcKind = tokens[3].kind;
     Value src1;
     if (srcKind == Token::IntLiteral)
       src1 = Value(Value::Immediate, std::stoll(tokens[3].string));
     else
-      src1 = Value(Value::Register, tokens[3].string);
+      src1 = Value(Value::Register, tokens[3].string.c_str());
 
     srcKind = tokens[5].kind;
     Value src2;
     if (srcKind == Token::IntLiteral)
       src2 = Value(Value::Immediate, std::stoll(tokens[5].string));
     else
-      src2 = Value(Value::Register, tokens[5].string);
+      src2 = Value(Value::Register, tokens[5].string.c_str());
 
     unsigned opCode = getInstBinaryOpCode(tokens[2].kind);
     instList.emplace_back(Instruction(opCode, dest, src1, src2));
@@ -272,21 +272,21 @@ bool Parser::parseRelationalOpInst(std::vector<Token> &tokens) {
     return false;
 
   if (!errGlobalState) {
-    Value dest(Value::Register, tokens[0].string);
+    Value dest(Value::Register, tokens[0].string.c_str());
 
     unsigned srcKind = tokens[2].kind;
     Value src1;
     if (srcKind == Token::IntLiteral)
       src1 = Value(Value::Immediate, std::stoll(tokens[2].string));
     else
-      src1 = Value(Value::Register, tokens[2].string);
+      src1 = Value(Value::Register, tokens[2].string.c_str());
 
     srcKind = tokens[4].kind;
     Value src2;
     if (srcKind == Token::IntLiteral)
       src2 = Value(Value::Immediate, std::stoll(tokens[4].string));
     else
-      src2 = Value(Value::Register, tokens[4].string);
+      src2 = Value(Value::Register, tokens[4].string.c_str());
 
     unsigned opCode = getInstRelationalOpCode(tokens[3].kind);
     instList.emplace_back(Instruction(opCode, dest, src1, src2));
@@ -306,9 +306,9 @@ bool Parser::parseBranchInst(std::vector<Token> &tokens) {
   }
 
   if (!errGlobalState) {
-    Value cond(Value::Register, tokens[1].string);
-    Value trueLabel(Value::Label, tokens[2].string);
-    Value falseLabel(Value::Label, tokens[3].string);
+    Value cond(Value::Register, tokens[1].string.c_str());
+    Value trueLabel(Value::Label, tokens[2].string.c_str());
+    Value falseLabel(Value::Label, tokens[3].string.c_str());
     instList.emplace_back(
         Instruction(Instruction::Br, cond, trueLabel, falseLabel));
   }
@@ -324,7 +324,7 @@ bool Parser::parseJumpInst(std::vector<Token> &tokens) {
     return false;
 
   if (!errGlobalState) {
-    Value targetLabel(Value::Label, tokens[1].string);
+    Value targetLabel(Value::Label, tokens[1].string.c_str());
     instList.emplace_back(Instruction(Instruction::Jmp, targetLabel));
   }
   return true;

@@ -1,34 +1,38 @@
 #ifndef IR_VALUE_H
 #define IR_VALUE_H
 
-#include <string>
+#include <cstdint>
 
 // Defines a value in SIL
 // A value is either a virtual register, a label, or a 64-bit signed integer
-// (immediate value)
+// (immediate value). For simplicity, we limit the name length to 7.
 class Value {
 public:
   enum { Invalid = 1, Immediate, Register, Label };
 
+  union ValueHeld {
+    int64_t immediateValue;
+    char name[8]; // Name of virtual register or label.
+  };
+
 private:
   unsigned kind;
-  std::string name; // Name of virtual register or label.
-  int64_t immediateValue;
+  ValueHeld vHeld;
 
 public:
   Value() : kind(Invalid) {}
 
   // for label and registers
-  Value(unsigned kind, const std::string &name);
+  Value(unsigned kind, const char *name);
 
   // for immediate values
   Value(unsigned kind, int64_t immediateValue);
 
   unsigned getKind() const { return kind; }
 
-  const std::string &getName();
+  const char *getName() const;
 
-  int64_t getValue();
+  int64_t getValue() const;
 
   void dump() const;
 };

@@ -1,45 +1,49 @@
 #include "IR/Value.h"
 
 #include <cassert>
+#include <cstring>
 #include <iostream>
 
-Value::Value(unsigned kind, const std::string &name) {
+Value::Value(unsigned kind, const char *name) {
   assert((kind == Register || kind == Label) &&
          "Value kind must be Register or Label");
   this->kind = kind;
-  this->name = name;
+
+  size_t nameLength = std::strlen(name);
+  assert(nameLength <= 7 && "Name length for Register or Label must be <= 7");
+  std::memcpy(this->vHeld.name, name, nameLength + 1);
 }
 
 Value::Value(unsigned kind, int64_t immediateValue) {
-  assert(kind == Immediate && "Value kind must be literal");
+  assert(kind == Immediate && "Value kind must be immediate");
   this->kind = kind;
-  this->immediateValue = immediateValue;
+  this->vHeld.immediateValue = immediateValue;
 }
 
-const std::string &Value::getName() {
+const char *Value::getName() const {
   assert((kind == Register || kind == Label) &&
          "Value kind must be Register or Label");
-  return name;
+  return vHeld.name;
 }
 
-int64_t Value::getValue() {
+int64_t Value::getValue() const {
   assert(kind == Immediate && "Value kind must be Immediate");
-  return immediateValue;
+  return vHeld.immediateValue;
 }
 
 void Value::dump() const {
   std::cout << '<';
   switch (kind) {
   case Register:
-    std::cout << "Reg:" << name;
+    std::cout << "Reg:" << vHeld.name;
     break;
 
   case Immediate:
-    std::cout << "Imm:" << immediateValue;
+    std::cout << "Imm:" << vHeld.immediateValue;
     break;
 
   case Label:
-    std::cout << "Label:" << name;
+    std::cout << "Label:" << vHeld.name;
     break;
 
   default:
