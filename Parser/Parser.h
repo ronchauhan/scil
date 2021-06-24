@@ -44,7 +44,7 @@ struct Token {
 // Basic SIL parser with ad-hoc error reporting.
 class Parser {
   std::string fileName;
-  std::vector<Instruction> instList;
+  std::vector<Instruction *> instList;
   bool errGlobalState; // We stop creating IR objects once this is set. But we
                        // still continue parsing as we might find more errors.
 
@@ -86,7 +86,7 @@ public:
   // br condition trueLabel falseLabel
   bool parseBranchInst(std::vector<Token> &tokens);
 
-  std::vector<Instruction> &getParsedInstructionList() { return instList; }
+  std::vector<Instruction *> &getParsedInstructionList() { return instList; }
 };
 
 #endif

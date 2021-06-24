@@ -150,7 +150,7 @@ bool Parser::parseLabelDef(std::vector<Token> &tokens) {
 
   if (!errGlobalState) {
     Value labelName(Value::Label, tokens[1].string.c_str());
-    instList.emplace_back(Instruction(Instruction::LabelDef, labelName));
+    instList.emplace_back(new Instruction(Instruction::LabelDef, labelName));
   }
   return true;
 }
@@ -189,7 +189,7 @@ bool Parser::parseRegDef(std::vector<Token> &tokens) {
     else
       src = Value(Value::Register, tokens[2].string.c_str());
 
-    instList.emplace_back(Instruction(Instruction::RegDef, dest, src));
+    instList.emplace_back(new Instruction(Instruction::RegDef, dest, src));
   }
   return true;
 }
@@ -253,7 +253,7 @@ bool Parser::parseBinaryOpInst(std::vector<Token> &tokens) {
       src2 = Value(Value::Register, tokens[5].string.c_str());
 
     unsigned opCode = getInstBinaryOpCode(tokens[2].kind);
-    instList.emplace_back(Instruction(opCode, dest, src1, src2));
+    instList.emplace_back(new Instruction(opCode, dest, src1, src2));
   }
   return true;
 }
@@ -272,7 +272,7 @@ bool Parser::parseRelationalOpInst(std::vector<Token> &tokens) {
     return false;
 
   if (!errGlobalState) {
-    Value dest(Value::Register, tokens[0].string.c_str());
+    Value dest = Value(Value::Register, tokens[0].string.c_str());
 
     unsigned srcKind = tokens[2].kind;
     Value src1;
@@ -289,7 +289,7 @@ bool Parser::parseRelationalOpInst(std::vector<Token> &tokens) {
       src2 = Value(Value::Register, tokens[4].string.c_str());
 
     unsigned opCode = getInstRelationalOpCode(tokens[3].kind);
-    instList.emplace_back(Instruction(opCode, dest, src1, src2));
+    instList.emplace_back(new Instruction(opCode, dest, src1, src2));
   }
   return true;
 }
@@ -306,11 +306,11 @@ bool Parser::parseBranchInst(std::vector<Token> &tokens) {
   }
 
   if (!errGlobalState) {
-    Value cond(Value::Register, tokens[1].string.c_str());
-    Value trueLabel(Value::Label, tokens[2].string.c_str());
-    Value falseLabel(Value::Label, tokens[3].string.c_str());
+    Value cond = Value(Value::Register, tokens[1].string.c_str());
+    Value trueLabel = Value(Value::Label, tokens[2].string.c_str());
+    Value falseLabel = Value(Value::Label, tokens[3].string.c_str());
     instList.emplace_back(
-        Instruction(Instruction::Br, cond, trueLabel, falseLabel));
+        new Instruction(Instruction::Br, cond, trueLabel, falseLabel));
   }
   return true;
 }
@@ -325,7 +325,7 @@ bool Parser::parseJumpInst(std::vector<Token> &tokens) {
 
   if (!errGlobalState) {
     Value targetLabel(Value::Label, tokens[1].string.c_str());
-    instList.emplace_back(Instruction(Instruction::Jmp, targetLabel));
+    instList.emplace_back(new Instruction(Instruction::Jmp, targetLabel));
   }
   return true;
 }
