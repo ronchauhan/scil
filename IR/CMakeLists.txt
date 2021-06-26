@@ -1,6 +1,7 @@
 add_library(IR STATIC
   Value.cpp
   Instruction.cpp
+  CFG.cpp
 )
 
 target_include_directories(IR PRIVATE

@@ -1,6 +1,7 @@
 #ifndef PARSER_PARSER_H
 #define PARSER_PARSER_H
 
+#include "IR/CFG.h"
 #include "IR/Instruction.h"
 
 #include <string>
@@ -42,15 +43,20 @@ struct Token {
 };
 
 // Basic SIL parser with ad-hoc error reporting.
+// TODO:
+// Enforce the following:
+//  - First instruction must be a label (entry label).
+//  - Instruction after a terminator must also be a label.
 class Parser {
   std::string fileName;
   std::vector<Instruction *> instList;
   bool errGlobalState; // We stop creating IR objects once this is set. But we
                        // still continue parsing as we might find more errors.
+  CFG *theCFG;
 
 public:
   Parser(const std::string &fileName)
-      : fileName(fileName), errGlobalState(false) {}
+      : fileName(fileName), errGlobalState(false), theCFG(nullptr) {}
 
   void tokenizeInstString(std::string instString, std::vector<Token> &tokens);
 
@@ -87,6 +93,10 @@ public:
   bool parseBranchInst(std::vector<Token> &tokens);
 
   std::vector<Instruction *> &getParsedInstructionList() { return instList; }
+
+  // CFG routines
+  void buildCFG();
+  CFG *getCFG();
 };
 
 #endif

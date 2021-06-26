@@ -31,6 +31,18 @@ Instruction::Instruction(unsigned opCode, const Value &label) {
   numOperands = 1;
 }
 
+Value Instruction::getOperand(unsigned i) const {
+  assert(i < numOperands);
+  switch (i) {
+  case 0:
+    return op1;
+  case 1:
+    return op2;
+  default:
+    return op3;
+  }
+}
+
 void Instruction::dump() const {
   std::cout << '<';
   switch (opCode) {

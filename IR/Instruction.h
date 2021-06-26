@@ -32,8 +32,13 @@ public:
   // jmp or label
   Instruction(unsigned opCode, const Value &label);
 
-  // TODO:
-  // subscript operator based on numOperands
+  Value getOperand(unsigned i) const;
+
+  bool isLabelDef() const { return opCode == LabelDef; }
+
+  bool isTerminator() const { return opCode == Jmp || opCode == Br; }
+
+  bool isBranch() const { return opCode == Br; }
 
   void dump() const;
 };

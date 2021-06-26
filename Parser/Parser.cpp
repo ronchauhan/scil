@@ -1,9 +1,11 @@
 #include "Parser/Parser.h"
+#include "IR/CFG.h"
 #include "IR/Instruction.h"
 
 #include <cassert>
 #include <fstream>
 #include <iostream>
+#include <map>
 #include <string>
 
 void Parser::parseFile() {
@@ -328,4 +330,79 @@ bool Parser::parseJumpInst(std::vector<Token> &tokens) {
     instList.emplace_back(new Instruction(Instruction::Jmp, targetLabel));
   }
   return true;
+}
+
+//------------------------------ CFG routines --------------------------------//
+
+CFG *Parser::getCFG() {
+  if (theCFG)
+    return theCFG;
+
+  parseFile();
+  buildCFG();
+  return theCFG;
+}
+
+void Parser::buildCFG() {
+  theCFG = new CFG();
+  std::vector<unsigned> labelIndices;
+  std::vector<unsigned> terminatorIndices;
+  std::map<Instruction *, CFGBlock *> inst2BB;
+
+  for (int i = 0; i < instList.size(); ++i) {
+    if (instList[i]->isLabelDef())
+      labelIndices.push_back(i);
+    else if (instList[i]->isTerminator())
+      terminatorIndices.push_back(i);
+  }
+
+  // Basic blocks
+  for (auto i : labelIndices) {
+    auto currentIdx = i;
+    CFGBlock *B = new CFGBlock(instList[currentIdx]->getOperand(0).getName());
+
+    ++currentIdx;
+
+    if (currentIdx == instList.size())
+      continue;
+
+    while (currentIdx < instList.size() &&
+           !instList[currentIdx]->isTerminator()) {
+      inst2BB[instList[currentIdx]] = B;
+      B->addInst(instList[currentIdx]);
+      ++currentIdx;
+    }
+    if (currentIdx < instList.size() && instList[currentIdx]->isTerminator()) {
+      B->addInst(instList[currentIdx]);
+      inst2BB[instList[currentIdx]] = B;
+    }
+
+    if (i == 0)
+      theCFG->addBlock(B, /*isEntryBlock=*/true);
+    else
+      theCFG->addBlock(B);
+  }
+
+  // TODO : jmp and br instructions require target labels, so anything after a
+  // terminator that isn't a LabelDef must be a dead block. Don't allow the text
+  // to have such dead blocks. In essence, all blocks must start with a label
+  // and end with a terminator.
+
+  // Add the edges.
+  for (auto i : terminatorIndices) {
+    auto terminator = instList[i];
+    auto currentBlock = inst2BB[terminator];
+    unsigned operandIdx = terminator->isBranch() ? 1 : 0;
+    const char *targetName = terminator->getOperand(operandIdx).getName();
+    CFGBlock *target = theCFG->getBlockWithName(targetName);
+    target->addPredecessor(currentBlock);
+    currentBlock->addSuccessor(target);
+
+    if (terminator->isBranch()) {
+      const char *target2Name = terminator->getOperand(2).getName();
+      CFGBlock *target2 = theCFG->getBlockWithName(target2Name);
+      target2->addPredecessor(currentBlock);
+      currentBlock->addSuccessor(target2);
+    }
+  }
 }
