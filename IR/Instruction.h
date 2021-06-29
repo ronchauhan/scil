@@ -40,6 +40,8 @@ public:
 
   bool isBranch() const { return opCode == Br; }
 
+  void print() const;
+
   void dump() const;
 };
 

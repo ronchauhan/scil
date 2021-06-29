@@ -31,6 +31,26 @@ int64_t Value::getValue() const {
   return vHeld.immediateValue;
 }
 
+void Value::print() const {
+  switch (kind) {
+  case Register:
+    std::cout << vHeld.name;
+    break;
+
+  case Immediate:
+    std::cout << vHeld.immediateValue;
+    break;
+
+  case Label:
+    std::cout << vHeld.name;
+    break;
+
+  default:
+    std::cout << "Invalid";
+    break;
+  }
+}
+
 void Value::dump() const {
   std::cout << '<';
   switch (kind) {

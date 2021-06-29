@@ -34,6 +34,8 @@ public:
 
   int64_t getValue() const;
 
+  void print() const;
+
   void dump() const;
 };
 

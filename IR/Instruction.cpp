@@ -43,6 +43,87 @@ Value Instruction::getOperand(unsigned i) const {
   }
 }
 
+void Instruction::print() const {
+  switch (opCode) {
+  case RegDef:
+    op1.print();
+    std::cout << " = ";
+    op2.print();
+    break;
+
+  case Br:
+    std::cout << "br ";
+    op1.print();
+    std::cout << ' ';
+    op2.print();
+    std::cout << ' ';
+    op3.print();
+    break;
+
+  case Jmp:
+    std::cout << "jmp ";
+    op1.print();
+    break;
+
+  case LabelDef:
+    std::cout << '.';
+    op1.print();
+    break;
+
+  case Add:
+    op1.print();
+    std::cout << " = add ";
+    op2.print();
+    std::cout << ", ";
+    op3.print();
+    break;
+
+  case Sub:
+    op1.print();
+    std::cout << " = sub ";
+    op2.print();
+    std::cout << ", ";
+    op3.print();
+    break;
+
+  case Mul:
+    op1.print();
+    std::cout << " = mul ";
+    op2.print();
+    std::cout << ", ";
+    op3.print();
+    break;
+
+  case Div:
+    op1.print();
+    std::cout << " = div ";
+    op2.print();
+    std::cout << ", ";
+    op3.print();
+    break;
+
+  case Gt:
+    op1.print();
+    std::cout << " = ";
+    op2.print();
+    std::cout << " > ";
+    op3.print();
+    break;
+
+  case Lt:
+    op1.print();
+    std::cout << " = ";
+    op2.print();
+    std::cout << " < ";
+    op3.print();
+    break;
+
+  default:
+    std::cout << "Unkown";
+    break;
+  }
+}
+
 void Instruction::dump() const {
   std::cout << '<';
   switch (opCode) {

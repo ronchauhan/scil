@@ -22,6 +22,8 @@ public:
 
   void addSuccessor(CFGBlock *b) { successors.push_back(b); }
 
+  void print() const;
+
   void dump() const;
 };
 
@@ -43,6 +45,9 @@ public:
   }
 
   CFGBlock *getEntryBlock() { return entryBlock; }
+
+  // Print parsable text to stdout
+  void print() const;
 
   void dump() const;
 };
