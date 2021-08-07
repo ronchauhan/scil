@@ -2,6 +2,7 @@
 #define IR_INSTRUCTION_H
 
 #include "Value.h"
+#include <iostream>
 
 // Defines a SIL instruction.
 // Every statement in SIL is considered to be an instruction.
@@ -40,9 +41,9 @@ public:
 
   bool isBranch() const { return opCode == Br; }
 
-  void print() const;
+  void print(std::ostream &OS) const;
 
-  void dump() const;
+  void dump(std::ostream &OS) const;
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include "IR/CFG.h"
 #include "IR/Instruction.h"
 #include "Parser/Parser.h"
+#include <fstream>
 
 static bool printCFG = false;
 static bool dumpCFG = false;
@@ -58,7 +59,7 @@ int main(int argc, char *argv[]) {
   CFG *theCFG = parser.getCFG();
 
   if (printCFG)
-    theCFG->print();
+    theCFG->print(std::cout);
   else if (dumpCFG)
-    theCFG->dump();
+    theCFG->dump(std::cout);
 }

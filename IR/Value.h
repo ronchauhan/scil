@@ -2,6 +2,7 @@
 #define IR_VALUE_H
 
 #include <cstdint>
+#include <iostream>
 
 // Defines a value in SIL
 // A value is either a virtual register, a label, or a 64-bit signed integer
@@ -34,9 +35,9 @@ public:
 
   int64_t getValue() const;
 
-  void print() const;
+  void print(std::ostream &OS) const;
 
-  void dump() const;
+  void dump(std::ostream &OS) const;
 };
 
 #endif

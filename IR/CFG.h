@@ -3,6 +3,7 @@
 
 #include "IR/Instruction.h"
 #include <cstring>
+#include <iostream>
 #include <vector>
 
 class CFGBlock {
@@ -22,9 +23,9 @@ public:
 
   void addSuccessor(CFGBlock *b) { successors.push_back(b); }
 
-  void print() const;
+  void print(std::ostream &OS) const;
 
-  void dump() const;
+  void dump(std::ostream &OS) const;
 };
 
 class CFG {
@@ -47,9 +48,9 @@ public:
   CFGBlock *getEntryBlock() { return entryBlock; }
 
   // Print parsable text to stdout
-  void print() const;
+  void print(std::ostream &OS) const;
 
-  void dump() const;
+  void dump(std::ostream &OS) const;
 };
 
 #endif

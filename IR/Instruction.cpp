@@ -43,145 +43,145 @@ Value Instruction::getOperand(unsigned i) const {
   }
 }
 
-void Instruction::print() const {
+void Instruction::print(std::ostream &OS) const {
   switch (opCode) {
   case RegDef:
-    op1.print();
-    std::cout << " = ";
-    op2.print();
+    op1.print(OS);
+    OS << " = ";
+    op2.print(OS);
     break;
 
   case Br:
-    std::cout << "br ";
-    op1.print();
-    std::cout << ' ';
-    op2.print();
-    std::cout << ' ';
-    op3.print();
+    OS << "br ";
+    op1.print(OS);
+    OS << ' ';
+    op2.print(OS);
+    OS << ' ';
+    op3.print(OS);
     break;
 
   case Jmp:
-    std::cout << "jmp ";
-    op1.print();
+    OS << "jmp ";
+    op1.print(OS);
     break;
 
   case LabelDef:
-    std::cout << '.';
-    op1.print();
+    OS << '.';
+    op1.print(OS);
     break;
 
   case Add:
-    op1.print();
-    std::cout << " = add ";
-    op2.print();
-    std::cout << ", ";
-    op3.print();
+    op1.print(OS);
+    OS << " = add ";
+    op2.print(OS);
+    OS << ", ";
+    op3.print(OS);
     break;
 
   case Sub:
-    op1.print();
-    std::cout << " = sub ";
-    op2.print();
-    std::cout << ", ";
-    op3.print();
+    op1.print(OS);
+    OS << " = sub ";
+    op2.print(OS);
+    OS << ", ";
+    op3.print(OS);
     break;
 
   case Mul:
-    op1.print();
-    std::cout << " = mul ";
-    op2.print();
-    std::cout << ", ";
-    op3.print();
+    op1.print(OS);
+    OS << " = mul ";
+    op2.print(OS);
+    OS << ", ";
+    op3.print(OS);
     break;
 
   case Div:
-    op1.print();
-    std::cout << " = div ";
-    op2.print();
-    std::cout << ", ";
-    op3.print();
+    op1.print(OS);
+    OS << " = div ";
+    op2.print(OS);
+    OS << ", ";
+    op3.print(OS);
     break;
 
   case Gt:
-    op1.print();
-    std::cout << " = ";
-    op2.print();
-    std::cout << " > ";
-    op3.print();
+    op1.print(OS);
+    OS << " = ";
+    op2.print(OS);
+    OS << " > ";
+    op3.print(OS);
     break;
 
   case Lt:
-    op1.print();
-    std::cout << " = ";
-    op2.print();
-    std::cout << " < ";
-    op3.print();
+    op1.print(OS);
+    OS << " = ";
+    op2.print(OS);
+    OS << " < ";
+    op3.print(OS);
     break;
 
   default:
-    std::cout << "Unkown";
+    OS << "Unkown";
     break;
   }
 }
 
-void Instruction::dump() const {
-  std::cout << '<';
+void Instruction::dump(std::ostream &OS) const {
+  OS << '<';
   switch (opCode) {
   case RegDef:
-    std::cout << "RegDef";
+    OS << "RegDef";
     break;
 
   case Br:
-    std::cout << "Br";
+    OS << "Br";
     break;
 
   case Jmp:
-    std::cout << "Jmp";
+    OS << "Jmp";
     break;
 
   case LabelDef:
-    std::cout << "LabelDef";
+    OS << "LabelDef";
     break;
 
   case Add:
-    std::cout << "Add";
+    OS << "Add";
     break;
 
   case Sub:
-    std::cout << "Sub";
+    OS << "Sub";
     break;
 
   case Mul:
-    std::cout << "Mul";
+    OS << "Mul";
     break;
 
   case Div:
-    std::cout << "Div";
+    OS << "Div";
     break;
 
   case Gt:
-    std::cout << "Gt";
+    OS << "Gt";
     break;
 
   case Lt:
-    std::cout << "Lt";
+    OS << "Lt";
     break;
 
   default:
-    std::cout << "Unkown";
+    OS << "Unkown";
     break;
   }
-  std::cout << '>';
-  std::cout << ' ';
-  op1.dump();
+  OS << '>';
+  OS << ' ';
+  op1.dump(OS);
 
   if (numOperands >= 2) {
-    std::cout << ' ';
-    op2.dump();
+    OS << ' ';
+    op2.dump(OS);
   }
 
   if (numOperands == 3) {
-    std::cout << ' ';
-    op3.dump();
+    OS << ' ';
+    op3.dump(OS);
   }
 }

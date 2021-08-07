@@ -31,44 +31,44 @@ int64_t Value::getValue() const {
   return vHeld.immediateValue;
 }
 
-void Value::print() const {
+void Value::print(std::ostream &OS) const {
   switch (kind) {
   case Register:
-    std::cout << vHeld.name;
+    OS << vHeld.name;
     break;
 
   case Immediate:
-    std::cout << vHeld.immediateValue;
+    OS << vHeld.immediateValue;
     break;
 
   case Label:
-    std::cout << vHeld.name;
+    OS << vHeld.name;
     break;
 
   default:
-    std::cout << "Invalid";
+    OS << "Invalid";
     break;
   }
 }
 
-void Value::dump() const {
-  std::cout << '<';
+void Value::dump(std::ostream &OS) const {
+  OS << '<';
   switch (kind) {
   case Register:
-    std::cout << "Reg:" << vHeld.name;
+    OS << "Reg:" << vHeld.name;
     break;
 
   case Immediate:
-    std::cout << "Imm:" << vHeld.immediateValue;
+    OS << "Imm:" << vHeld.immediateValue;
     break;
 
   case Label:
-    std::cout << "Label:" << vHeld.name;
+    OS << "Label:" << vHeld.name;
     break;
 
   default:
-    std::cout << "Invalid";
+    OS << "Invalid";
     break;
   }
-  std::cout << '>';
+  OS << '>';
 }

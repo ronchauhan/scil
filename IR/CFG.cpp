@@ -8,32 +8,32 @@ CFGBlock::CFGBlock(const char *name) {
   std::memcpy(blockName, name, sizeof(name));
 }
 
-void CFGBlock::print() const {
-  std::cout << '.' << blockName << '\n';
+void CFGBlock::print(std::ostream &OS) const {
+  OS << '.' << blockName << '\n';
   for (const auto inst : instructions) {
-    std::cout << "  ";
-    inst->print();
-    std::cout << '\n';
+    OS << "  ";
+    inst->print(OS);
+    OS << '\n';
   }
 }
 
-void CFGBlock::dump() const {
-  std::cout << "Block : " << blockName << " \n";
+void CFGBlock::dump(std::ostream &OS) const {
+  OS << "Block : " << blockName << " \n";
 
-  std::cout << "Predecessors : ";
+  OS << "Predecessors : ";
   for (const auto block : predecessors)
-    std::cout << block->getName() << ' ';
+    OS << block->getName() << ' ';
 
-  std::cout << '\n';
+  OS << '\n';
 
-  std::cout << "Successors : ";
+  OS << "Successors : ";
   for (const auto block : successors)
-    std::cout << block->getName() << ' ';
+    OS << block->getName() << ' ';
 
-  std::cout << '\n';
+  OS << '\n';
   for (const auto inst : instructions) {
-    inst->dump();
-    std::cout << '\n';
+    inst->dump(OS);
+    OS << '\n';
   }
 }
 
@@ -45,16 +45,16 @@ void CFG::addBlock(CFGBlock *b, bool isEntryBlock) {
   blocks.push_back(b);
 }
 
-void CFG::print() const {
+void CFG::print(std::ostream &OS) const {
   for (auto block : blocks) {
-    block->print();
-    std::cout << '\n';
+    block->print(OS);
+    OS << '\n';
   }
 }
 
-void CFG::dump() const {
+void CFG::dump(std::ostream &OS) const {
   for (auto block : blocks) {
-    block->dump();
-    std::cout << '\n';
+    block->dump(OS);
+    OS << '\n';
   }
 }
