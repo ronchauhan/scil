@@ -19,6 +19,12 @@ public:
 
   void addInst(Instruction *inst) { instructions.push_back(inst); }
 
+  std::vector<Instruction *> &getInstructions() { return instructions; }
+
+  std::vector<CFGBlock *> &getPredecessors() { return predecessors; }
+
+  std::vector<CFGBlock *> &getSuccessors() { return successors; }
+
   void addPredecessor(CFGBlock *b) { predecessors.push_back(b); }
 
   void addSuccessor(CFGBlock *b) { successors.push_back(b); }
@@ -51,6 +57,9 @@ public:
   void print(std::ostream &OS) const;
 
   void dump(std::ostream &OS) const;
+
+  // Emit the graph as DOT file
+  void emitToFile(const char *fileName) const;
 };
 
 #endif

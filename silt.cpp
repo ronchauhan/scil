@@ -7,6 +7,7 @@
 
 static bool printCFG = false;
 static bool dumpCFG = false;
+static bool emitDot = false;
 
 static char *fileName = nullptr;
 static void showHelpAndExit(const char *);
@@ -39,6 +40,9 @@ static bool parseOption(const char *option) {
   } else if (std::strcmp(option, "-d") == 0) {
     dumpCFG = true;
     return true;
+  } else if (std::strcmp(option, "-emit-dot") == 0) {
+    emitDot = true;
+    return true;
   }
   return false;
 }
@@ -62,4 +66,6 @@ int main(int argc, char *argv[]) {
     theCFG->print(std::cout);
   else if (dumpCFG)
     theCFG->dump(std::cout);
+  else if (emitDot)
+    theCFG->emitToFile((std::string(fileName) + ".dot").c_str());
 }
