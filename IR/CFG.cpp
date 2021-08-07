@@ -2,6 +2,7 @@
 
 #include <cstring>
 #include <iostream>
+#include <cassert>
 
 CFGBlock::CFGBlock(const char *name) {
   std::memcpy(blockName, name, sizeof(name));
@@ -37,8 +38,10 @@ void CFGBlock::dump() const {
 }
 
 void CFG::addBlock(CFGBlock *b, bool isEntryBlock) {
-  if (isEntryBlock)
+  if (isEntryBlock) {
+    assert(entryBlock == nullptr && "entry block can't be set twice");
     entryBlock = b;
+  }
   blocks.push_back(b);
 }
 
