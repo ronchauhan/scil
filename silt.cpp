@@ -8,6 +8,7 @@
 static bool printCFG = false;
 static bool dumpCFG = false;
 static bool emitDot = false;
+static bool emitDotSimplified = false;
 
 static char *fileName = nullptr;
 static void showHelpAndExit(const char *);
@@ -43,6 +44,9 @@ static bool parseOption(const char *option) {
   } else if (std::strcmp(option, "-emit-dot") == 0) {
     emitDot = true;
     return true;
+  } else if (std::strcmp(option, "-emit-dot-simplified") == 0) {
+    emitDotSimplified = true;
+    return true;
   }
   return false;
 }
@@ -68,4 +72,7 @@ int main(int argc, char *argv[]) {
     theCFG->dump(std::cout);
   else if (emitDot)
     theCFG->emitToFile((std::string(fileName) + ".dot").c_str());
+  else if (emitDotSimplified)
+    theCFG->emitToFile((std::string(fileName) + ".dot").c_str(),
+                       /*simplified=*/true);
 }

@@ -38,6 +38,10 @@ class CFG {
   CFGBlock *entryBlock;
   std::vector<CFGBlock *> blocks;
 
+  void emitBlockNameOnly(CFGBlock *block, std::ostream &outStream) const;
+
+  void emitBlockFull(CFGBlock *block, std::ostream &outStream) const;
+
 public:
   CFG() : entryBlock(nullptr){};
 
@@ -59,7 +63,7 @@ public:
   void dump(std::ostream &OS) const;
 
   // Emit the graph as DOT file
-  void emitToFile(const char *fileName) const;
+  void emitToFile(const char *fileName, bool simplified = false) const;
 };
 
 #endif

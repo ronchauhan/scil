@@ -60,7 +60,7 @@ void CFG::dump(std::ostream &OS) const {
   }
 }
 
-void CFG::emitToFile(const char *fileName) const {
+void CFG::emitToFile(const char *fileName, bool simplified) const {
   std::ofstream outStream;
   outStream.open(fileName);
   if (!outStream) {
@@ -76,16 +76,11 @@ void CFG::emitToFile(const char *fileName) const {
   for (auto block : blocks) {
     outStream << NBSP4;
     outStream << block->getName() << ' ';
-    outStream << '[';
-    outStream << "label=\"<" << block->getName() << ">";
-    outStream << '\\' << 'l';
 
-    auto &instructions = block->getInstructions();
-    for (auto inst : instructions) {
-      inst->print(outStream);
-      outStream << '\\' << 'l';
-    }
-    outStream << "\"];\n";
+    if (simplified)
+      emitBlockNameOnly(block, outStream);
+    else
+      emitBlockFull(block, outStream); // Emit the instructions too.
   }
 
   outStream << '\n';
@@ -99,4 +94,21 @@ void CFG::emitToFile(const char *fileName) const {
     }
   }
   outStream << "}";
+}
+
+void CFG::emitBlockFull(CFGBlock *block, std::ostream &outStream) const {
+  outStream << '[';
+  outStream << "label=\"<" << block->getName() << ">";
+  outStream << '\\' << 'l';
+
+  auto &instructions = block->getInstructions();
+  for (auto inst : instructions) {
+    inst->print(outStream);
+    outStream << '\\' << 'l';
+  }
+  outStream << "\"];\n";
+}
+
+void CFG::emitBlockNameOnly(CFGBlock *block, std::ostream &outStream) const {
+  outStream << "[label=\"" << block->getName() << "\"];\n";
 }
