@@ -2,6 +2,7 @@
 #define IR_INSTRUCTION_H
 
 #include "Value.h"
+#include <cstdint>
 #include <iostream>
 
 // Defines a SIL instruction.
@@ -18,22 +19,22 @@ public:
   enum { RegDef = 1, Br, Jmp, LabelDef, Add, Sub, Mul, Div, Gt, Lt };
 
 private:
-  unsigned opCode;
-  unsigned numOperands;
+  uint8_t opCode : 4;
+  uint8_t numOperands : 4;
   Value op1, op2, op3;
 
 public:
   // RegDef
-  Instruction(unsigned opCode, const Value &dest, const Value &src);
+  Instruction(uint8_t opCode, const Value &dest, const Value &src);
 
   // branch, relational or binary operations
-  Instruction(unsigned opCode, const Value &destOrCond,
+  Instruction(uint8_t opCode, const Value &destOrCond,
               const Value &srcOrTrueLabel, const Value &srcOrFalseLabel);
 
   // jmp or label
-  Instruction(unsigned opCode, const Value &label);
+  Instruction(uint8_t opCode, const Value &label);
 
-  Value getOperand(unsigned i) const;
+  Value getOperand(uint8_t i) const;
 
   bool isLabelDef() const { return opCode == LabelDef; }
 

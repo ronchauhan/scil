@@ -3,7 +3,7 @@
 #include <cassert>
 #include <iostream>
 
-Instruction::Instruction(unsigned opCode, const Value &dest, const Value &src) {
+Instruction::Instruction(uint8_t opCode, const Value &dest, const Value &src) {
   assert(opCode == RegDef && "Expected a simple assignment");
   this->opCode = opCode;
   this->op1 = dest;
@@ -11,7 +11,7 @@ Instruction::Instruction(unsigned opCode, const Value &dest, const Value &src) {
   numOperands = 2;
 }
 
-Instruction::Instruction(unsigned opCode, const Value &destOrCond,
+Instruction::Instruction(uint8_t opCode, const Value &destOrCond,
                          const Value &srcOrTrueLabel,
                          const Value &srcOrFalseLabel) {
   assert((opCode == Br || (opCode >= Add && opCode <= Lt)) &&
@@ -23,7 +23,7 @@ Instruction::Instruction(unsigned opCode, const Value &destOrCond,
   numOperands = 3;
 }
 
-Instruction::Instruction(unsigned opCode, const Value &label) {
+Instruction::Instruction(uint8_t opCode, const Value &label) {
   assert((opCode == Jmp || opCode == LabelDef) &&
          "Expected Jmp or LabelDef as the opcode");
   this->opCode = opCode;
@@ -31,7 +31,7 @@ Instruction::Instruction(unsigned opCode, const Value &label) {
   numOperands = 1;
 }
 
-Value Instruction::getOperand(unsigned i) const {
+Value Instruction::getOperand(uint8_t i) const {
   assert(i < numOperands);
   switch (i) {
   case 0:

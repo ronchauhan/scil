@@ -17,17 +17,17 @@ public:
   };
 
 private:
-  unsigned kind;
+  uint8_t kind;
   ValueHeld vHeld;
 
 public:
   Value() : kind(Invalid) {}
 
   // for label and registers
-  Value(unsigned kind, const char *name);
+  Value(uint8_t kind, const char *name);
 
   // for immediate values
-  Value(unsigned kind, int64_t immediateValue);
+  Value(uint8_t kind, int64_t immediateValue);
 
   unsigned getKind() const { return kind; }
 

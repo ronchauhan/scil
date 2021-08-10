@@ -58,6 +58,9 @@ public:
   Parser(const std::string &fileName)
       : fileName(fileName), errGlobalState(false), theCFG(nullptr) {}
 
+  CFG *getCFG();
+
+private:
   void tokenizeInstString(std::string instString, std::vector<Token> &tokens);
 
   // Methods that map tokenKind to instruction opcodes
@@ -94,9 +97,7 @@ public:
 
   std::vector<Instruction *> &getParsedInstructionList() { return instList; }
 
-  // CFG routines
   void buildCFG();
-  CFG *getCFG();
 };
 
 #endif

@@ -4,7 +4,7 @@
 #include <cstring>
 #include <iostream>
 
-Value::Value(unsigned kind, const char *name) {
+Value::Value(uint8_t kind, const char *name) {
   assert((kind == Register || kind == Label) &&
          "Value kind must be Register or Label");
   this->kind = kind;
@@ -14,7 +14,7 @@ Value::Value(unsigned kind, const char *name) {
   std::memcpy(this->vHeld.name, name, nameLength + 1);
 }
 
-Value::Value(unsigned kind, int64_t immediateValue) {
+Value::Value(uint8_t kind, int64_t immediateValue) {
   assert(kind == Immediate && "Value kind must be immediate");
   this->kind = kind;
   this->vHeld.immediateValue = immediateValue;

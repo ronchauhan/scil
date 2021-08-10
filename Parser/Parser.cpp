@@ -274,7 +274,7 @@ bool Parser::parseRelationalOpInst(std::vector<Token> &tokens) {
     return false;
 
   if (!errGlobalState) {
-    Value dest = Value(Value::Register, tokens[0].string.c_str());
+    Value dest(Value::Register, tokens[0].string.c_str());
 
     unsigned srcKind = tokens[2].kind;
     Value src1;
@@ -308,9 +308,9 @@ bool Parser::parseBranchInst(std::vector<Token> &tokens) {
   }
 
   if (!errGlobalState) {
-    Value cond = Value(Value::Register, tokens[1].string.c_str());
-    Value trueLabel = Value(Value::Label, tokens[2].string.c_str());
-    Value falseLabel = Value(Value::Label, tokens[3].string.c_str());
+    Value cond(Value::Register, tokens[1].string.c_str());
+    Value trueLabel(Value::Label, tokens[2].string.c_str());
+    Value falseLabel(Value::Label, tokens[3].string.c_str());
     instList.emplace_back(
         new Instruction(Instruction::Br, cond, trueLabel, falseLabel));
   }
