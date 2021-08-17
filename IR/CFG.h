@@ -57,6 +57,8 @@ public:
 
   CFGBlock *getEntryBlock() { return entryBlock; }
 
+  unsigned getNumBlocks() { return blocks.size(); }
+
   std::vector<CFGBlock *> &getBlocks() { return blocks; }
 
   // Print parsable text to stdout

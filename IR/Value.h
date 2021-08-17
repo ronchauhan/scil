@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <iostream>
 
-// Defines a value in SIL
+// Defines a value in SCIL
 // A value is either a virtual register, a label, or a 64-bit signed integer
 // (immediate value). For simplicity, we limit the name length to 7.
 class Value {

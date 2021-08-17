@@ -5,9 +5,9 @@
 #include <cstdint>
 #include <iostream>
 
-// Defines a SIL instruction.
-// Every statement in SIL is considered to be an instruction.
-// Exhaustive list of all kinds of instructions in SIL :
+// Defines a SCIL instruction.
+// Every statement in SCIL is considered to be an instruction.
+// Exhaustive list of all kinds of instructions in SCIL :
 //  dest = src
 //  dest = binOp src1, src2
 //  dest = src1 relOp src2

@@ -42,7 +42,7 @@ struct Token {
   }
 };
 
-// Basic SIL parser with ad-hoc error reporting.
+// Basic SCIL parser with ad-hoc error reporting.
 // TODO:
 // Enforce the following:
 //  - First instruction must be a label (entry label).

@@ -52,9 +52,9 @@ static bool parseOption(const char *option) {
 }
 
 static void showHelpAndExit(const char *toolName) {
-  std::cout << toolName << " - Tool to work with SIL CFGs\n";
+  std::cout << toolName << " - Tool to work with SCIL CFGs\n";
   std::cout << "usage :\n";
-  std::cout << '\t' << toolName << "  [option]  <filename>.sil\n";
+  std::cout << '\t' << toolName << "  [option]  <filename>.scil\n";
   std::cout << "options :\n";
   std::cout << "\t-p \t\t\t print CFG as parsable text (default)\n";
   std::cout << "\t-d \t\t\t dump CFG as represented in memory\n";
