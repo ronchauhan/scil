@@ -94,6 +94,7 @@ void CFG::emitToFile(const char *fileName, bool simplified) const {
     }
   }
   outStream << "}";
+  outStream.close();
 }
 
 void CFG::emitBlockFull(CFGBlock *block, std::ostream &outStream) const {

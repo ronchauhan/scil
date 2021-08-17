@@ -56,8 +56,11 @@ static void showHelpAndExit(const char *toolName) {
   std::cout << "usage :\n";
   std::cout << '\t' << toolName << "  [option]  <filename>.sil\n";
   std::cout << "options :\n";
-  std::cout << "\t-p \t print CFG as parsable text (default)\n";
-  std::cout << "\t-d \t dump CFG as represented in memory\n";
+  std::cout << "\t-p \t\t\t print CFG as parsable text (default)\n";
+  std::cout << "\t-d \t\t\t dump CFG as represented in memory\n";
+  std::cout << "\t-emit-dot \t\t dump CFG as a DOT file\n";
+  std::cout << "\t-emit-dot-simplified \t dump CFG as a DOT file, without "
+               "instructions in basic blocks\n";
   exit(0);
 }
 

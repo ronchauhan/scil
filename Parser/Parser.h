@@ -38,7 +38,7 @@ struct Token {
   bool isOpCode() const { return kind >= Add && kind <= Br; }
   bool isBinaryOpCode() const { return kind >= Add && kind <= Div; }
   bool isRelationalOpCode() const {
-    return kind >= GreaterThan && kind < LessThan;
+    return kind >= GreaterThan && kind <= LessThan;
   }
 };
 
