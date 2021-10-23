@@ -11,6 +11,11 @@ int main(int argc, char *argv[]) {
   Parser parser(argv[1]);
   CFG *theCFG = parser.getCFG();
 
+  if (parser.foundErrors()) {
+    std::cout << "Exiting due to parsing errors\n";
+    exit(1);
+  }
+
   DominatorsAnalysis DA;
   DA.run(theCFG);
   DA.printResults();

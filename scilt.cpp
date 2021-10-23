@@ -67,7 +67,13 @@ static void showHelpAndExit(const char *toolName) {
 int main(int argc, char *argv[]) {
   parseArguments(argc, argv);
   Parser parser(fileName);
+
   CFG *theCFG = parser.getCFG();
+
+  if (parser.foundErrors()) {
+    std::cout << "Exiting due to parsing errors\n";
+    exit(1);
+  }
 
   if (printCFG)
     theCFG->print(std::cout);

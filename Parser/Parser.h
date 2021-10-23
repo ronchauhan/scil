@@ -58,6 +58,8 @@ public:
   Parser(const std::string &fileName)
       : fileName(fileName), errGlobalState(false), theCFG(nullptr) {}
 
+  bool foundErrors() const { return errGlobalState == true; }
+
   CFG *getCFG();
 
 private:
