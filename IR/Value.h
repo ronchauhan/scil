@@ -38,6 +38,16 @@ public:
   void print(std::ostream &OS) const;
 
   void dump(std::ostream &OS) const;
+
+  void operator=(const Value &);
+
+  bool operator==(const Value &) const;
+
+  bool operator!=(const Value &) const;
+};
+
+struct ValueHashFunction {
+  size_t operator()(const Value &V) const;
 };
 
 #endif

@@ -31,6 +31,31 @@ int64_t Value::getValue() const {
   return vHeld.immediateValue;
 }
 
+void Value::operator=(const Value &other) {
+  this->kind = other.getKind();
+  switch (this->kind) {
+  case Immediate:
+    this->vHeld.immediateValue = other.getValue();
+    break;
+  case Register:
+  case Label:
+    std::memcpy((void *)this->vHeld.name, (const void *)other.getName(), 8);
+    break;
+  }
+}
+
+bool Value::operator==(const Value &other) const {
+  if (this->kind != other.getKind())
+    return false;
+
+  if (this->kind == Immediate)
+    return this->getValue() == other.getValue();
+
+  return strcmp(this->getName(), other.getName()) == 0;
+}
+
+bool Value::operator!=(const Value &other) const { return !(*this == other); }
+
 void Value::print(std::ostream &OS) const {
   switch (kind) {
   case Register:
@@ -71,4 +96,16 @@ void Value::dump(std::ostream &OS) const {
     break;
   }
   OS << '>';
+}
+
+size_t ValueHashFunction::operator()(const Value &V) const {
+  size_t H1 = static_cast<size_t>(V.getKind());
+  size_t H2 = 0;
+
+  if (V.getKind() == Value::Immediate)
+    H2 = static_cast<size_t>(V.getValue());
+  else
+    H2 = static_cast<size_t>(*V.getName());
+
+  return H1 ^ (H2 - 1);
 }
