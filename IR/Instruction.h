@@ -34,7 +34,11 @@ public:
   // jmp or label
   Instruction(uint8_t opCode, const Value &label);
 
+  uint8_t getNumOperands() const { return numOperands; }
+
   Value getOperand(uint8_t i) const;
+
+  uint8_t getOpCode() const { return opCode; }
 
   bool isLabelDef() const { return opCode == LabelDef; }
 
